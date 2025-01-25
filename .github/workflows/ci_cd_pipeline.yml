@@ -11,7 +11,7 @@ on:
 
 env:
   REGION: us
-  REPOSITORY_NAME: MLops_lab4
+  REPOSITORY_NAME: mlops-artifact-registry-test
 
 jobs:
   build_test_and_deploy:
