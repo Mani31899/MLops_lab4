@@ -11,7 +11,7 @@ on:
 
 env:
   REGION: us
-  REPOSITORY_NAME: github-gcp-lab
+  REPOSITORY_NAME: MLops_lab4
 
 jobs:
   build_test_and_deploy:
