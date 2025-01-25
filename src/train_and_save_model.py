@@ -39,6 +39,8 @@ def train_model(X_train, y_train):
 def get_model_version(bucket_name, version_file_name):
     storage_client = storage.Client()  # Create a GCP Storage client
 
+    print("*******************************",bucket_name,"********************************************88")
+
     bucket = storage_client.bucket(bucket_name)  # Access the specified bucket
 
     blob = bucket.blob(version_file_name)  # Access the specified blob (binary large objects) within the bucket
