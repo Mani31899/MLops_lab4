@@ -1,0 +1,2 @@
+GCS_BUCKET_NAME=mlops-test-bucket123
+VERSION_FILE_NAME=model_version.txt
