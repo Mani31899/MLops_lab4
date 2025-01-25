@@ -8,10 +8,6 @@ load_dotenv()
 BUCKET_NAME = os.getenv('GCS_BUCKET_NAME')  # Google Cloud Storage bucket name
 VERSION_FILE_NAME = os.getenv('VERSION_FILE_NAME')  # Name of the file where the model version is stored
 
-# Validate environment variables
-if not BUCKET_NAME or not VERSION_FILE_NAME:
-    raise ValueError("Environment variables GCS_BUCKET_NAME and VERSION_FILE_NAME must be set.")
-
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
@@ -43,18 +39,15 @@ def train_model(X_train, y_train):
 def get_model_version(bucket_name, version_file_name):
     storage_client = storage.Client()  # Create a GCP Storage client
 
-    try:
-        bucket = storage_client.bucket(bucket_name)  # Access the specified bucket
-        blob = bucket.blob(version_file_name)  # Access the specified blob (binary large objects) within the bucket
-        
-        if blob.exists():
-            version_as_string = blob.download_as_text()  # Retrieve the version number as text
-            version = int(version_as_string)  # Convert the version number to an integer
-        else:
-            version = 0  # If the blob does not exist, set version to 0
-    except Exception as e:
-        raise RuntimeError(f"Error accessing the bucket or version file: {e}")
+    bucket = storage_client.bucket(bucket_name)  # Access the specified bucket
+
+    blob = bucket.blob(version_file_name)  # Access the specified blob (binary large objects) within the bucket
     
+    if blob.exists():
+        version_as_string = blob.download_as_text()  # Retrieve the version number as text
+        version = int(version_as_string)  # Convert the version number to an integer
+    else:
+        version = 0  # If the blob does not exist, set version to 0
     return version
 
 # Function to update the model version in Google Cloud Storage
